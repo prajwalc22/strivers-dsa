@@ -1,0 +1,176 @@
+ctrl+shift+b = to run the code
+
+time complexity: the rate at which the time taken increases with respect to the 
+input size. theta(0) the angle between the graph of time and input.
+
+and it is only computed in big-O O(_) notation not in seconds.
+just the number of steps is what we need and we can calculate the tc of a program
+Rules:
+1.Always calculate in worst case scenarios :
+marks wala example if else wala
+2.avoid constants:
+o(4n^3 + 3n^2 + 8) wala example because 8 which is constant will not have that much of 
+a significance so we do not consider it
+3.avoid lower values:
+(4n^3 + 3n^2 + 8) same example here if n=10^5, the equation becomes 
+(4x10^15 + 3x10^10 + 8) here 10^15 is already huge number and adding 10^10 to it will not 
+matter that much a sligh bit but still the number of operations will not be more than 10^15
+so we avoid lower values.
+
+
+for eg:
+
+heres a simple for loop
+for(int i=0; i<N; i++){
+
+    cout<<"hello";
+}
+here in each iteration 3 things happens 
+increment , check , print 
+and since here the loop will run N time therefore 
+o(N.3) or o(3N) - Big o of 3N is the tc of this program.
+
+there are other notations as well such as theta and omega but they are not as much 
+important for interviews.
+
+big o - worst case - upper-bound
+omega - best case - lower-bound
+theta - average case 
+
+note: in a nested for loop, say
+for(int i=0; i<N; i++){
+    for(int j=0; j<N; j++){
+        some code;
+    }
+}
+
+what happens here that 
+see when i=0 then it goes inside and the inner loop (j wali) j goes from 0 to N times.
+then when i increments to 1 it j again goes from 0 to N 
+so it happens like this 
+i=0 , j=0,1,2,3....N (N+N+N+N....+N)
+i=1 , j=0,1,2,3....N (N+N+N+N....+N)
+i=2 , j=0,1,2,3....N (N+N+N+N....+N)
+  .
+  .
+  .
+  .
+i=N , j=0,1,2,3....N   
+
+(N+N+N+N....+N) this happens N times so we can say it happens N x N times which is N^2
+therefore the complexity is O(N^2)
+
+the sum of first n natural numbers is 
+[n(n+1)]/2
+
+
+Space Complexity:
+memory space - big-O 
+
+[sc- auxillary space + input space ]
+auxillary space - the space that u take to solve the problem 
+input space - the space u take to store input
+
+lets say int a and int b // this is input space
+and c = a + b //this is auxillary space
+both combined is space complexity
+
+
+to print characters like numbers:
+
+char ch = 'A';
+cout << ch;          // prints A
+cout << ch + 1;      // prints B (but might give ASCII int instead unless cast)
+cout << (char)(ch + 1);  // ✅ properly prints B
+
+
+cout << (char)('A' + j);
+
+
+```A tuple is a fixed-size ordered collection of elements, where each element
+can be of a different type.```
+
+```Think of it like a container for grouping related values together — 
+more flexible than a pair because it can hold more than two elements.```
+
+
+
+
+
+STL: standard template library
+it is divided into four types
+1.Functions
+2.Containers
+3.iterators
+4.Algorithms
+
+pair(Container)
+
+A pair is a simple container that stores two values together — often of different 
+types.
+A pair is a utility class, not a full container.
+It holds exactly two values (like a lightweight struct):
+
+-Use cases:
+Returning two values from a function
+
+-Storing key-value like data without using a full map
+
+-Sorting complex structures using custom logic (like in competitive programming)
+
+
+void explainPair(){
+
+    pair<int,int> p= {1,3};
+    cout<<p.first<<" "<<p.second;
+
+
+    pair<int, pair<int,int>> p={1,{3,4}};
+    cout<<p.first<<" "<<p.second.first<<" "<<p.second.second;
+
+
+    pair<int,int> arr[] ={ {1,2} ,__{3,4}__ , {5,6} };
+    cout<<arr[1].second;
+}
+
+
+vector:
+A vector is a dynamic array that can grow or shrink in size. It's part of <vector>.
+
+Use cases:
+Storing collections of elements of the same type
+
+Replacing raw arrays for safety and ease
+
+Frequently used in algorithms and data manipulation
+
+
+Syntax:
+ void explainVector(){
+
+vector<int> v;
+
+v.push_back(1);
+v.emplace_back(2);//emplace_back() is a method for STL containers like vector, deque, etc.,
+                    and it constructs an element directly in-place at the end of the container — 
+                    instead of creating it somewhere else and then copying or moving it.
+
+
+Difference between push_back() and emplace_back():
+
+Feature     	    push_back()	                            emplace_back()
+___________________________________________________________________________________________________________
+What it does	    Adds a copy or move of an object	    Constructs the object in-place directly
+Overhead	        May require extra copy/move steps	    No copy/move → more efficient
+Introduced in	    C++98	                                C++11
+
+
+vector<pair<int,int>> vec;
+
+v.push_back({1.2});
+v.emplace_back(1,2);
+
+
+
+
+ }
