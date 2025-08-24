@@ -168,9 +168,17 @@ Introduced in	    C++98	                                C++11
 vector<pair<int,int>> vec;
 
 v.push_back({1.2});
-v.emplace_back(1,2);
+v.emplace_back(1,2); //automatically considers 1 and 2 as pairs ,, no need for {} 
 
 
 
 
  }
+
+
+ mutable means that it can be changed later 
+ immutable means that it can not 
+ A mutable object can be modified after creation. 
+ You can change its elements, size, or other properties without creating a new object.
+ An immutable object cannot be modified after creation.
+ Any change creates a new object instead of altering the original.

@@ -1,0 +1,150 @@
+How to Install Your Header Files System-wide on Linux
+Option 1: System-wide Installation (Affects All Users)
+Location: /usr/local/include/
+This is the standard location for custom system-wide headers. Here's how to do it:
+
+bash
+# Create your common.h file first
+sudo nano /usr/local/include/common.h
+Add your content:
+
+cpp
+#ifndef COMMON_H
+#define COMMON_H
+
+#include <iostream>
+#include <vector>
+#include <string>
+#include <algorithm>
+// Add other commonly used headers
+
+#endif
+Save and exit (Ctrl+X, then Y, then Enter in nano)
+
+Set proper permissions:
+
+bash
+sudo chmod 644 /usr/local/include/common.h
+sudo chown root:root /usr/local/include/common.h
+Now you can use it anywhere:
+
+cpp
+#include <common.h>  // ✅ Works from any directory!
+using namespace std;
+
+int main() {
+    cout << "Hello World!" << endl;
+    return 0;
+}
+Option 2: User-specific Installation (Only for Your Account)
+Location: ~/.local/include/
+This method doesn't require sudo and only affects your user account:
+
+bash
+# Create the directory if it doesn't exist
+mkdir -p ~/.local/include
+
+# Create your header file
+nano ~/.local/include/common.h
+Add the same content as above, then tell g++ where to find it:
+
+Method 2A: Using Compiler Flags
+bash
+g++ -I~/.local/include main.cpp -o main
+Method 2B: Add to Environment Variables (Permanent)
+Add this to your ~/.bashrc or ~/.profile:
+
+bash
+echo 'export CPLUS_INCLUDE_PATH="$HOME/.local/include:$CPLUS_INCLUDE_PATH"' >> ~/.bashrc
+source ~/.bashrc
+Now g++ will automatically search there:
+
+bash
+g++ main.cpp -o main  # No -I flag needed!
+Option 3: Create a Custom Include Path
+You can also create your own custom location:
+
+bash
+# Create your own headers directory
+mkdir -p ~/myheaders
+nano ~/myheaders/common.h
+
+# Use it with -I flag
+g++ -I~/myheaders main.cpp -o main
+Verification: Check if GCC Finds Your Headers
+You can see all the directories where GCC looks for headers:
+
+bash
+# For C++
+g++ -xc++ -E -v - < /dev/null
+
+# For C
+gcc -xc -E -v - < /dev/null
+This will show you output like:
+
+text
+#include <...> search starts here:
+ /usr/lib/gcc/x86_64-linux-gnu/9/include
+ /usr/local/include          ← Your system-wide headers go here
+ /usr/lib/gcc/x86_64-linux-gnu/9/include-fixed
+ /usr/include/x86_64-linux-gnu
+ /usr/include
+End of search list.
+Quick Step-by-Step for Beginners
+For system-wide installation (recommended for personal machines):
+
+Create the file:
+
+bash
+sudo nano /usr/local/include/common.h
+Add this content:
+
+cpp
+#ifndef COMMON_H
+#define COMMON_H
+
+#include <iostream>
+#include <vector>
+#include <string>
+#include <algorithm>
+
+#endif
+Save and exit: Ctrl+X → Y → Enter
+
+Test it:
+
+cpp
+// test.cpp
+#include <common.h>
+using namespace std;
+
+int main() {
+    cout << "It works!" << endl;
+    return 0;
+}
+Compile:
+
+bash
+g++ test.cpp -o test
+./test
+Important Notes
+/usr/local/include/ is the preferred location for custom system-wide headers
+
+No need for quotes: Use #include <common.h> (not #include "common.h")
+
+Automatic discovery: GCC searches /usr/local/include/ by default
+
+Root access required: You need sudo for /usr/local/include/
+
+Alternative: Use ~/.local/include/ if you don't have root access
+
+Why This Works
+The GCC compiler has a predefined search path for headers. When you use #include <headerfile>, it searches these directories in order:
+
+Compiler-specific directories
+
+/usr/local/include/ ← Your custom headers go here
+
+System directories like /usr/include/
+
+This is why putting your common.h in /usr/local/include/ makes it available everywhere without any special compiler flags!
